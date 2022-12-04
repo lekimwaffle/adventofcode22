@@ -1,7 +1,7 @@
 ﻿var scores = new List<int> { default(char) }
     .Concat(Enumerable.Range('a', 26))
     .Concat(Enumerable.Range('A', 26))
-    .Select((x, i) => (Character: (char)x, Score: i + 0))
+    .Select((x, Score) => (Character: (char)x, Score))
     .ToDictionary(x => x.Character, x => x.Score);
 
 var input = File.ReadAllLines("input.txt");
