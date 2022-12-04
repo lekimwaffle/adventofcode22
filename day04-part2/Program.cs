@@ -1,14 +1,10 @@
 ﻿using System.Diagnostics;
 
 var input = File.ReadAllLines("input.txt");
-var count = input.Select(x => x.Split(',').Select(y => y.Split('-').Select(int.Parse)))
-    .Count(x => CheckOverlap(x.First().First(), x.First().Last(), x.Last().First(), x.Last().Last()));
+var count = input.Select(x => x.Split(',', '-').Select(int.Parse))
+    .Select(x => x.ToArray())
+    .Count(x => (x[0] >= x[2] && x[0] <= x[3]) ||
+                (x[1] >= x[2] && x[1] <= x[3]) ||
+                (x[2] >= x[0] && x[2] <= x[1]) ||
+                (x[3] >= x[0] && x[3] <= x[1]));
 Debug.WriteLine($"The amount of fully contained pairs = {count}");
-
-bool CheckOverlap(int leftFirst, int leftLast, int rightFirst, int rightLast)
-{
-    return  (leftFirst >= rightFirst && leftFirst <= rightLast) ||
-            (leftLast >= rightFirst && leftLast <= rightLast) ||
-            (rightFirst >= leftFirst && rightFirst <= leftLast) ||
-            (rightLast >= leftFirst && rightLast <= leftLast);
-}
