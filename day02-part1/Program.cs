@@ -2,33 +2,29 @@
 const char RockShape = 'A', RockResponse = 'X';
 const char PaperShape = 'B', PaperResponse = 'Y';
 const char ScissorShape = 'C', ScissorResponse = 'Z';
-var context = new Dictionary<char, ShapeData>
+var scores = new Dictionary<char, int>
 {
-    [RockShape] = new (RockShape, 1, RockResponse), // Rock
-    [PaperShape] = new (PaperShape, 2, PaperResponse), // Paper
-    [ScissorShape] = new (ScissorShape, 3, ScissorResponse) // Scissor
+    [RockShape] = 1, // Rock
+    [PaperShape] = 2, // Paper
+    [ScissorShape] = 3 // Scissor
 };
-int totalScore = 0;for (int i = 0; i < input.Length; i++)
-{
-    var round = input[i].Replace(" ", string.Empty);
-    totalScore += GetScore(round[0], round[1]);
-}
+
+int totalScore = 0;
+for (int i = 0; i < input.Length; i++)
+    totalScore += GetScore(input[i][0], input[i][2]);
 
 Console.WriteLine($"The total score is {totalScore}");
 
 int GetScore(char Shape, char Response)
 {
-    (ShapeData Opponent, char Response) situation = (context[Shape], Response);
-    return situation switch
+    return (Shape, Response) switch
     {
-        _ when situation.Opponent.Response == Response => situation.Opponent.Score + 3,
-        { Opponent.Shape: RockShape, Response: PaperResponse } => context[PaperShape].Score + 6,
-        { Opponent.Shape: RockShape, Response: ScissorResponse } => context[ScissorShape].Score,
-        { Opponent.Shape: PaperShape, Response: RockResponse } => context[RockShape].Score,
-        { Opponent.Shape: PaperShape, Response: ScissorResponse } => context[ScissorShape].Score + 6,
-        { Opponent.Shape: ScissorShape, Response: RockResponse } => context[RockShape].Score + 6,
-        { Opponent.Shape: ScissorShape, Response: PaperResponse } => context[PaperShape].Score
+        { Shape: RockShape, Response: PaperResponse } => scores[PaperShape] + 6,
+        { Shape: RockShape, Response: ScissorResponse } => scores[ScissorShape],
+        { Shape: PaperShape, Response: RockResponse } => scores[RockShape],
+        { Shape: PaperShape, Response: ScissorResponse } => scores[ScissorShape] + 6,
+        { Shape: ScissorShape, Response: RockResponse } => scores[RockShape] + 6,
+        { Shape: ScissorShape, Response: PaperResponse } => scores[PaperShape],
+        _ => scores[Shape] + 3
     };
 }
-
-record ShapeData(char Shape, int Score, char Response);
