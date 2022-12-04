@@ -1,8 +1,8 @@
-﻿var lowerCase = Enumerable.Range('a', 26).ToList();
-var upperCase = Enumerable.Range('A', 26).ToList();
-lowerCase.AddRange(upperCase);
-var scores = lowerCase.Select((x, i) => ((char)x, i + 1)).ToDictionary(x => x.Item1, x => x.Item2);
-scores.Add(default, 0);
+﻿var scores = new List<int> { default(char) }
+    .Concat(Enumerable.Range('a', 26))
+    .Concat(Enumerable.Range('A', 26))
+    .Select((x, i) => (Character: (char)x, Score: i + 0))
+    .ToDictionary(x => x.Character, x => x.Score);
 
 var input = File.ReadAllLines("input.txt");
 int cumulativeScore = input.Select(x => (First: x[..(x.Length / 2)], Second: x[(x.Length / 2)..]))
