@@ -11,7 +11,7 @@ for (int i = 0; i < input.Length; i++)
         if (CurrentElf.Calories > WinningElf.Calories)
             WinningElf = CurrentElf;
 
-        CurrentElf = CurrentElf with { Index = CurrentElf.Index + 1, Calories = 0 };
+        CurrentElf = (CurrentElf.Index + 1, 0);
     }
 }
 

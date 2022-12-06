@@ -19,7 +19,7 @@ for (int i = 0; i < input.Length; i++)
             }
         }
 
-        CurrentElf = CurrentElf with { Index = CurrentElf.Index + 1, Calories = 0 };
+        CurrentElf = (CurrentElf.Index + 1, 0);
     }
 }
 
