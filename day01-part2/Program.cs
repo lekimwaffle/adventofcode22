@@ -12,9 +12,7 @@ for (int i = 0; i < input.Length; i++)
         {
             if (CurrentElf.Calories > Top3[t].Calories)
             {
-                var tempList = new List<(int Index, int Calories)>(Top3[0..t]) { CurrentElf };
-                tempList.AddRange(Top3[t..^1]);
-                Top3 = tempList.ToArray();
+                Top3 = Top3[0..t].Concat(new[] { CurrentElf }).Concat(Top3[t..^1]).ToArray();
                 break;
             }
         }
